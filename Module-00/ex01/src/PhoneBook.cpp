@@ -1,0 +1,49 @@
+#include "../include/PhoneBook.hpp"
+
+PhoneBook::PhoneBook() : count(0), oldest(0)
+{
+    for (int i = 0; i < 8; ++i)
+        contacts[i] = NULL;
+}
+
+void PhoneBook::add(std::string &fn, std::string &ln, std::string &nn, std::string &pn, std::string &ds)
+{
+    if (oldest == 8)
+        oldest = 0;
+    if (count < 8)
+    {
+        contacts[count] = new Contact(fn, ln, nn, pn, ds);
+        count++;
+    }
+    else
+    {
+        delete contacts[oldest];
+        contacts[oldest] = new Contact(fn, ln, nn, pn, ds);
+        oldest++;
+    }
+    std::cout << "Contact addedd successfully" << std::endl;
+}
+
+void PhoneBook::display_contacts()
+{
+    std::cout << "     Index|First Name| Last Name|  Nickname" << std::endl;
+    std::cout << "-------------------------------------------" << std::endl;
+    for (int i = 0; i < count; ++i)
+    {
+        contacts[i]->display(i);
+        std::cout << "-------------------------------------------" << std::endl;
+    }
+}
+
+void PhoneBook::search_specific(int index)
+{
+    if (index >= 0 && index < count)
+    {
+        std::cout << "     Index|First Name| Last Name|  Nickname" << std::endl;
+        std::cout << "-------------------------------------------" << std::endl;
+        contacts[index]->display(index);
+        std::cout << "-------------------------------------------" << std::endl;
+    }
+    else
+        std::cout << "Invalid index!\n";
+}

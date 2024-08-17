@@ -6,6 +6,7 @@
 class Contact
 {
     public:
+        Contact();
         Contact(std::string fn, std::string ln, std::string nn, std::string pn, std::string ds);
         void display(int index);
     private:

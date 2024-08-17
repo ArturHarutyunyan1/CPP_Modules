@@ -1,10 +1,6 @@
 #include "../include/PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : count(0), oldest(0)
-{
-    for (int i = 0; i < 8; ++i)
-        contacts[i] = NULL;
-}
+PhoneBook::PhoneBook() : count(0), oldest(0) {}
 
 void PhoneBook::add(std::string &fn, std::string &ln, std::string &nn, std::string &pn, std::string &ds)
 {
@@ -12,13 +8,12 @@ void PhoneBook::add(std::string &fn, std::string &ln, std::string &nn, std::stri
         oldest = 0;
     if (count < 8)
     {
-        contacts[count] = new Contact(fn, ln, nn, pn, ds);
+        contacts[count] = Contact(fn, ln, nn, pn, ds);
         count++;
     }
     else
     {
-        delete contacts[oldest];
-        contacts[oldest] = new Contact(fn, ln, nn, pn, ds);
+        contacts[oldest] = Contact(fn, ln, nn, pn, ds);
         oldest++;
     }
     std::cout << "Contact addedd successfully" << std::endl;
@@ -30,7 +25,7 @@ void PhoneBook::display_contacts()
     std::cout << "-------------------------------------------" << std::endl;
     for (int i = 0; i < count; ++i)
     {
-        contacts[i]->display(i);
+        contacts[i].display(i);
         std::cout << "-------------------------------------------" << std::endl;
     }
 }
@@ -41,7 +36,7 @@ void PhoneBook::search_specific(int index)
     {
         std::cout << "     Index|First Name| Last Name|  Nickname" << std::endl;
         std::cout << "-------------------------------------------" << std::endl;
-        contacts[index]->display(index);
+        contacts[index].display(index);
         std::cout << "-------------------------------------------" << std::endl;
     }
     else

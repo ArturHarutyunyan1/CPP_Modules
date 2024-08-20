@@ -64,6 +64,7 @@ std::string ft_toupper(std::string str)
 void search(PhoneBook &phoneBook)
 {
     int index;
+    std::string input;
     
     if (phoneBook.count == 0)
     {
@@ -74,16 +75,21 @@ void search(PhoneBook &phoneBook)
     std::cout << "Enter the index of contact\n";
     while (1)
     {
-        std::cin >> index;
+        std::getline(std::cin, input);
 
-        if (std::cin.fail())
+        try
+        {
+            index = std::stoi(input);
+            if (std::cin.fail())
+                throw std::invalid_argument("Invalid index\n");
+            break;
+        }
+        catch (std::exception &exc)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid input. Try again!\n";
         }
-        else
-            break;
     }
     phoneBook.search_specific(index);
 }
@@ -98,9 +104,8 @@ void start(PhoneBook &phoneBook)
         std::cout << "\nADD\n"
                   << "SEARCH\n"
                   << "EXIT\n" << std::endl;
-        std::cin >> choice;
-        std::cin.ignore();
-        
+        std::getline(std::cin, choice);
+
         if (ft_toupper(choice) == "ADD")
             add_contact(phoneBook);
         else if (ft_toupper(choice) == "SEARCH")

@@ -1,6 +1,6 @@
 #include "../include/PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : count(0), oldest(0) {}
+PhoneBook::PhoneBook() : oldest(0), count(0) {}
 
 void PhoneBook::add(std::string &fn, std::string &ln, std::string &nn, std::string &pn, std::string &ds)
 {
@@ -34,10 +34,7 @@ void PhoneBook::search_specific(int index)
 {
     if (index >= 0 && index < count)
     {
-        std::cout << "     Index|First Name| Last Name|  Nickname" << std::endl;
-        std::cout << "-------------------------------------------" << std::endl;
-        contacts[index].display(index);
-        std::cout << "-------------------------------------------" << std::endl;
+        contacts[index].display_info();
     }
     else
         std::cout << "Invalid index!\n";

@@ -1,5 +1,5 @@
 NAME = phonebook
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -fsanitize=address -g -std=c++98
 SRC = src/main.cpp \
 	  src/utils.cpp \
       src/Contact.cpp \
@@ -9,7 +9,7 @@ CC = c++
 RM = rm -f
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ)
+	$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ)
 all: $(NAME)
 clean:
 	$(RM) $(OBJ)

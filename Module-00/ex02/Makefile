@@ -1,5 +1,5 @@
 NAME = bank
-FLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = tests.cpp \
       Account.cpp
 OBJ = $(SRC:.cpp=.o)
@@ -7,10 +7,10 @@ CC = c++
 RM = rm -f
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ)
+	$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.cpp
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) -c $< -o $@
 
 all: $(NAME)
 

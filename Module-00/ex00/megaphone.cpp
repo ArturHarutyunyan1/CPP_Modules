@@ -5,11 +5,7 @@ void capitalize(char **argv)
     for (int i = 1; argv[i]; i++)
     {
         for (int j = 0; argv[i][j]; j++)
-        {
-            if (argv[i][j] >= 'a' && argv[i][j] <= 'z')
-                argv[i][j] -= 32;
-            std::cout << argv[i][j];
-        }
+            std::cout << (char)std::toupper(argv[i][j]);
         if (argv[i + 1])
             std::cout << " ";
         if (!argv[i + 1])

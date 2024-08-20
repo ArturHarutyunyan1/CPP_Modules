@@ -64,10 +64,27 @@ std::string ft_toupper(std::string str)
 void search(PhoneBook &phoneBook)
 {
     int index;
-
+    
+    if (phoneBook.count == 0)
+    {
+        std::cout << "Contact list is empty\n";
+        return;
+    }
     phoneBook.display_contacts();
     std::cout << "Enter the index of contact\n";
-    std::cin >> index;
+    while (1)
+    {
+        std::cin >> index;
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Try again!\n";
+        }
+        else
+            break;
+    }
     phoneBook.search_specific(index);
 }
 

@@ -7,9 +7,9 @@ class PhoneBook
 {
     private:
         Contact contacts[8];
-        int count;
         int oldest;
     public:
+        int count;
         PhoneBook();
         void add(std::string &fn, std::string &ln, std::string &nn, std::string &pn, std::string &ds);
         void display_contacts();

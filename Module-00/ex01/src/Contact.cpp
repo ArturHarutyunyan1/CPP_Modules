@@ -15,13 +15,13 @@ void Contact::display(int index)
 
 std::string Contact::formatField(std::string str)
 {
-    std::ostringstream oss;
+    std::string formatted = str;
 
     if (str.length() > 10)
-        oss << std::setw(10) << std::right << str.substr(0, 9) + ".";
-    else
-        oss << std::setw(10) << std::right << str;
-    return (oss.str());
+        return (str.substr(0, 9) + ".");
+    while (formatted.length() < 10)
+        formatted = " " + formatted;
+    return (formatted);
 }
 
 void Contact::display_info()

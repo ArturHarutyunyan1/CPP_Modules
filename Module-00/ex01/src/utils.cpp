@@ -73,22 +73,31 @@ void search(PhoneBook &phoneBook)
     }
     phoneBook.display_contacts();
     std::cout << "Enter the index of contact\n";
+    std::cout << "> ";
     while (1)
     {
         std::getline(std::cin, input);
-
-        try
+        if (std::all_of(input.begin(), input.end(), ::isdigit))
         {
-            index = std::stoi(input);
-            if (std::cin.fail())
-                throw std::invalid_argument("Invalid index\n");
-            break;
+            try
+            {
+                index = std::stoi(input);
+                if (std::cin.fail())
+                    throw std::invalid_argument("Invalid index\n");
+                break;
+            }
+            catch (std::exception &exc)
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Try again!\n";
+                std::cout << "> ";
+            }
         }
-        catch (std::exception &exc)
+        else
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Try again!\n";
+            std::cout << "Invalid input. Try again\n";
+            std::cout << "> ";
         }
     }
     phoneBook.search_specific(index);
@@ -104,6 +113,7 @@ void start(PhoneBook &phoneBook)
         std::cout << "\nADD\n"
                   << "SEARCH\n"
                   << "EXIT\n" << std::endl;
+        std::cout << "> ";
         std::getline(std::cin, choice);
 
         if (ft_toupper(choice) == "ADD")

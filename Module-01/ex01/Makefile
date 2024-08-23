@@ -4,11 +4,11 @@ SRC = main.cpp \
 	  Zombie.cpp \
 	  ZombieHorde.cpp
 OBJ = ${SRC:.cpp=.o}
-CC = c++
+CPP = c++
 RM = rm -f
 
 $(NAME): $(OBJ)
-	$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ)
+	$(CPP) $(CPPFLAGS) -o $(NAME) $(OBJ)
 all: $(NAME)
 clean:
 	$(RM) $(OBJ)	

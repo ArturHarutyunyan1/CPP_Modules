@@ -1,6 +1,9 @@
-NAME = brain
+NAME = violence
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp
+SRC = main.cpp \
+	  HumanA.cpp \
+	  HumanB.cpp \
+	  Weapon.cpp
 OBJ = ${SRC:.cpp=.o}
 CPP = c++
 RM = rm -f

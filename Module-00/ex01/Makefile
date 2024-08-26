@@ -5,11 +5,15 @@ SRC = src/main.cpp \
       src/Contact.cpp \
 	  src/PhoneBook.cpp
 OBJ = ${SRC:.cpp=.o}
-CC = c++
+CPP = c++
 RM = rm -f
 
 $(NAME): $(OBJ)
-	$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ)
+	$(CPP) $(CPPFLAGS) -o $(NAME) $(OBJ)
+
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c $< -o $@
+
 all: $(NAME)
 clean:
 	$(RM) $(OBJ)

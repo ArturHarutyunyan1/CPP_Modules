@@ -3,14 +3,14 @@ CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = tests.cpp \
       Account.cpp
 OBJ = $(SRC:.cpp=.o)
-CC = c++
+CPP= c++
 RM = rm -f
 
 $(NAME): $(OBJ)
-	$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ)
+	$(CPP) $(CPPFLAGS) -o $(NAME) $(OBJ)
 
 %.o: %.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 all: $(NAME)
 

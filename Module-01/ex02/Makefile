@@ -7,7 +7,8 @@ RM = rm -f
 
 $(NAME): $(OBJ)
 	$(CPP) $(CPPFLAGS) -o $(NAME) $(OBJ)
-	
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 all: $(NAME)
 clean:
 	$(RM) $(OBJ)	

@@ -2,12 +2,10 @@
 
 Harl::Harl(void)
 {
-    std::cout << "Harl was created :)" << std::endl;
 }
 
 Harl::~Harl(void)
 {
-    std::cout << "\nHarl has been destroyed :(" << std::endl;
 }
 
 void Harl::debug(void)
@@ -43,13 +41,34 @@ void Harl::complain(std::string level)
 {
     void (Harl::*ptr_to_complain[4])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
     std::string lvls[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    int i;
 
-    for (int i = 0; i < 4; i++)
+    for (i = 0; i < 4; i++)
     {
         if (lvls[i] == level)
-        {
-            (this->*ptr_to_complain[i])();
             break;
-        }
+    }
+    switch (i)
+    {
+        case 0:
+            (this->*ptr_to_complain[0])();
+            (this->*ptr_to_complain[1])();
+            (this->*ptr_to_complain[2])();
+            (this->*ptr_to_complain[3])();
+            break;
+        case 1:
+            (this->*ptr_to_complain[1])();
+            (this->*ptr_to_complain[2])();
+            (this->*ptr_to_complain[3])();
+            break;
+        case 2:
+            (this->*ptr_to_complain[2])();
+            (this->*ptr_to_complain[3])();
+            break;
+        case 3:
+            (this->*ptr_to_complain[3])();
+            break;
+        default:
+            std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
     }
 }

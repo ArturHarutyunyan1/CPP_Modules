@@ -7,10 +7,10 @@ Contact::Contact(std::string fn, std::string ln, std::string nn, std::string pn,
 
 void Contact::display(int index)
 {
-    std::cout << formatField(std::to_string(index)) << "|"
-            << formatField(firstName) << "|"
-            << formatField(lastName) << "|"
-            << formatField(nickName) << std::endl;
+        std::cout << std::setw(10) << std::right << (index < 10 ? " " + std::to_string(index) : std::to_string(index)) << "|"
+              << std::setw(10) << std::right << (firstName.length() > 10 ? firstName.substr(0, 9) + "." : firstName) << "|"
+              << std::setw(10) << std::right << (lastName.length() > 10 ? lastName.substr(0, 9) + "." : lastName) << "|"
+              << std::setw(10) << std::right << (nickName.length() > 10 ? nickName.substr(0, 9) + "." : nickName) << std::endl;
 }
 
 std::string Contact::formatField(std::string str)

@@ -12,7 +12,7 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoint(10), _energyPoint(
 
 ClapTrap::ClapTrap(const ClapTrap &cp) : _name(cp._name), _hitPoint(cp._hitPoint), _energyPoint(cp._energyPoint), _attackDamage(cp._attackDamage)
 {
-    std::cout << "Copy constructor called for " << this->_name << std::endl;
+    std::cout << "Copy constructor called" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap &cp)
@@ -28,7 +28,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &cp)
 
 ClapTrap::~ClapTrap(void)
 {
-        std::cout << "ClapTrap " << this->_name << " was destroyed" << std::endl;
+    std::cout << "ClapTrap " << this->_name << " was destroyed" << std::endl;
 }
 
 void ClapTrap::attack(const std::string& target)

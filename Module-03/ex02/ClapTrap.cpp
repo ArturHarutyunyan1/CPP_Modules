@@ -1,72 +1,114 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap() : _name("Unknown"), _hitPoint(10), _energyPoint(10), _attackDamage(0)
+ClapTrap::ClapTrap() : _name("Default"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-    std::cout << " 🌟 Unknown created" << std::endl;
+    std::cout << "ClapTrap: Default constructor was called" << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name) : _name(name), _hitPoint(10), _energyPoint(10), _attackDamage(0)
+ClapTrap::ClapTrap(const std::string &name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-    std::cout << "🌟" << name << " Was created" << std::endl;
+    std::cout << "ClapTrap: " << name << " was created" << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap &cp) : _name(cp._name), _hitPoint(cp._hitPoint), _energyPoint(cp._energyPoint), _attackDamage(cp._attackDamage)
+ClapTrap::ClapTrap(const ClapTrap &copy) : _name(copy._name), _hitPoints(copy._hitPoints), _energyPoints(copy._energyPoints), _attackDamage(copy._attackDamage)
 {
-    std::cout << "Copy constructor called" << std::endl;
+    std::cout << "ClapTrap: " << copy._name << " was copied" << std::endl;
 }
 
-ClapTrap& ClapTrap::operator=(const ClapTrap &cp)
+ClapTrap &ClapTrap::operator=(const ClapTrap &copy)
 {
-    std::cout << "Copy assignment operator called for" << this->_name << std::endl;
-
-    this->_name = cp._name;
-    this->_hitPoint = cp._hitPoint;
-    this->_energyPoint = cp._energyPoint;
-    this->_attackDamage = cp._attackDamage;
+    std::cout << "ClapTrap: Assignment operator for " << copy._name << " was called" << std::endl;
+    if (this != &copy)
+    {
+        this->_name = copy.getName();
+        this->_hitPoints = copy.getHitPoints();
+        this->_energyPoints = copy.getEnergyPoints();
+        this->_attackDamage = copy.getAttackDamage();
+    }
     return (*this);
 }
 
 ClapTrap::~ClapTrap(void)
 {
-    std::cout << "ClapTrap " << this->_name << " was destroyed" << std::endl;
+    std::cout << "ClapTrap: " << this->_name << " was destroyed :((" << std::endl;
 }
 
-void ClapTrap::attack(const std::string& target)
+std::string ClapTrap::getName(void) const
 {
-    if (this->_energyPoint > 0 && this->_hitPoint > 0)
+    return (this->_name);
+}
+
+unsigned int ClapTrap::getHitPoints(void) const
+{
+    return (this->_hitPoints);
+}
+
+unsigned int ClapTrap::getEnergyPoints(void) const
+{
+    return (this->_energyPoints);
+}
+
+unsigned int ClapTrap::getAttackDamage(void) const
+{
+    return (this->_attackDamage);
+}
+
+void ClapTrap::setName(const std::string &name)
+{
+    this->_name = name;
+}
+
+void ClapTrap::setHitPoints(const unsigned int hitPoints)
+{
+    this->_hitPoints = hitPoints;
+}
+
+void ClapTrap::setEnergyPoints(const unsigned int energyPoints)
+{
+    this->_energyPoints = energyPoints;
+}
+
+void ClapTrap::setAttackDamage(const unsigned int attackDamage)
+{
+    this->_attackDamage = attackDamage;
+}
+
+void ClapTrap::attack(const std::string &target)
+{
+    if (this->_hitPoints > 0 && this->_energyPoints > 0)
     {
-        std::cout << "ClapTrap " << _name << " 💥 attacks " << target << ", causing " << _attackDamage << " points of damage!" << std::endl;
-        this->_energyPoint--;
+        std::cout << "ClapTrap: " << this->_name << " attacks " << target << " causing to lose " << this->_attackDamage << " point(s) of damage" << std::endl;
+        this->_energyPoints--;
     }
-    else if (this->_energyPoint == 0)
-        std::cout << "ClapTrap " << _name << " is not able to attack " << target << " because he doesn't have enough energy points." << std::endl;
+    else if (this->_hitPoints == 0)
+        std::cout << "ClapTrap: " << this->_name << " was unable to attack " << target << " because he's out of hit points" << std::endl;
     else
-        std::cout << "ClapTrap " << _name << " is not able to attack " << target << " because he doesn't have enough hit points." << std::endl;
+        std::cout << "ClapTrap: " << this->_name << " was unable to attack " << target << " because he's out of energy points" << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-    if (this->_hitPoint > amount)
-        this->_hitPoint -= amount;
+    if (this->_hitPoints > amount)
+    {
+        std::cout << "ClapTrap: " << this->_name << " takes " << amount << " point(s) of damage" << std::endl;
+        this->_hitPoints -= amount;
+    }
     else
-        this->_hitPoint = 0;
-
-    if (this->_hitPoint == 0)
-        std::cout << "ClapTrap " << _name << " 😵 has no hit points left. Stop beating " << _name << ", he's dead 💀" << std::endl;
+        this->_hitPoints = 0;
+    if (this->_hitPoints == 0)
+        std::cout << "ClapTrap: Stop beating " << this->_name << " he's dead :(" << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (this->_energyPoint > 0 && this->_hitPoint > 0 && this->_hitPoint + amount <= 10)
+    if (this->_energyPoints > 0 && this->_hitPoints > 0)
     {
-        this->_hitPoint += amount;
-        std::cout << "ClapTrap " << this->_name << " 💚 repairs itself, gaining " << amount << " hit points back." << std::endl;
-        this->_energyPoint--;
+        std::cout << "ClapTrap: " << this->_name << " repaired itself and gained " << amount << " of hit point(s) back" << std::endl;
+        this->_hitPoints += amount;
+        this->_energyPoints--;
     }
-    else if (this->_energyPoint == 0)
-        std::cout << "ClapTrap " << this->_name << "  💔 is not able to repair itself because he doesn't have enough energy points." << std::endl;
-    else if (this->_hitPoint == 0)
-        std::cout << "ClapTrap " << this->_name << " 💔 is not able to repair itself because he doesn't have enough hit points." << std::endl;
+    else if (this->_hitPoints == 0)
+        std::cout << "ClapTrap: " << this->_name << " can't repair itself because he's dead :(" << std::endl;
     else
-        std::cout << "ClapTrap " << this->_name << " can't have more than 10 hit points." << std::endl;
+        std::cout << "ClapTrap: " << this->_name << " can't repair itself because he's out of energy points" << std::endl;
 }

@@ -2,41 +2,44 @@
 
 FragTrap::FragTrap() : ClapTrap()
 {
-    std::cout << "FragTrap default constructor called" << std::endl;
-    this->_hitPoint = 100;
-    this->_energyPoint = 100;
+    std::cout << "FragTrap: Default was created" << std::endl;
+    this->_hitPoints = 100;
+    this->_energyPoints = 100;
     this->_attackDamage = 30;
 }
 
-FragTrap::FragTrap(std::string name) : ClapTrap(name)
+FragTrap::FragTrap(const std::string &name) : ClapTrap(name)
 {
-    std::cout << "FragTrap constructor for " << name << " called" << std::endl;
-    this->_hitPoint = 100;
-    this->_energyPoint = 100;
+    std::cout << "FragTrap: " << name << "was created" << std::endl;
+    this->_name = name;
+    this->_hitPoints = 100;
+    this->_energyPoints = 100;
     this->_attackDamage = 30;
 }
 
-FragTrap::FragTrap(const FragTrap &cp) : ClapTrap(cp)
+FragTrap::FragTrap(const FragTrap &copy) : ClapTrap(copy)
 {
-    std::cout << "FragTrap Copy constructor called" << std::endl;
+    std::cout << "FragTrap: " << copy._name << " was copied" << std::endl;
 }
 
-FragTrap &FragTrap::operator=(const FragTrap &cp)
+FragTrap &FragTrap::operator=(const FragTrap &copy)
 {
-    std::cout << "FragTrap Copy assignment constructor for " << this->_name << " called" << std::endl;
-    this->_name = cp._name;
-    this->_hitPoint = cp._hitPoint;
-    this->_energyPoint = cp._energyPoint;
-    this->_attackDamage = cp._attackDamage;
+    if (this != &copy)
+    {
+        this->_name = copy._name;
+        this->_hitPoints = copy._hitPoints;
+        this->_energyPoints = copy._energyPoints;
+        this->_attackDamage = copy._attackDamage;
+    }
     return (*this);
 }
 
 FragTrap::~FragTrap(void)
 {
-    std::cout << "Destructor for " << this->_name << " called" << std::endl;
+    std::cout << "FragTrap: " << this->_name << " was destroyed :((" << std::endl;
 }
 
 void FragTrap::highFivesGuys(void)
 {
-    std::cout << "You wan't to high five? Awesome! high five 🚀 If you’re ready for more, just let me know!" << std::endl;
+    std::cout << "FragTrap: " << this->_name << " Want's to high five? Awesome! high five 🚀 If you’re ready for more, just let me know!" << std::endl;
 }

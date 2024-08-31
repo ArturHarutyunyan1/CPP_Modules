@@ -1,40 +1,23 @@
 #include "ClapTrap.hpp"
 
-int main() {
-    std::cout << "Welcome to the ClapTrap simulation!\n" << std::endl;
-
-    // Create ClapTrap instances with unique names
-    ClapTrap vaspurak("Vaspurak");
+int main()
+{
     ClapTrap agatangexos("Agatangexos");
-    ClapTrap gasparcho("Gasparcho");
+    ClapTrap vaspurak("Vaspurak");
+    ClapTrap gaspar("Gasparcho");
 
-    std::cout << "Initial state:\n";
-    vaspurak.attack("Agatangexos");
-    agatangexos.takeDamage(4);
+    std::cout << "-------------------------------" << std::endl;
 
     agatangexos.attack("Gasparcho");
-    gasparcho.takeDamage(5);
-
-    gasparcho.attack("Vaspurak");
-    vaspurak.takeDamage(10);
-
-    std::cout << "\nAgatangexos repairs itself:\n";
-    agatangexos.beRepaired(10);
-
-    std::cout << "Vaspurak repairs itself:\n";
-    vaspurak.beRepaired(3);
-
-    std::cout << "Gasparcho repairs itself:\n";
-    gasparcho.beRepaired(5);
-
-    std::cout << "\nFinal state:\n";
+    agatangexos.attack("Vaspurak");
+    gaspar.takeDamage(7);
+    vaspurak.takeDamage(5);
     vaspurak.attack("Gasparcho");
-    gasparcho.takeDamage(3);
-
+    gaspar.takeDamage(3);
     agatangexos.attack("Gasparcho");
-    gasparcho.takeDamage(5);
-
-    std::cout << "\nSimulation complete!\n";
-
-    return 0;
+    gaspar.takeDamage(5);
+    vaspurak.beRepaired(5);
+    vaspurak.attack("Agatangexos");
+    agatangexos.takeDamage(10);
+    std::cout << "-------------------------------" << std::endl;
 }

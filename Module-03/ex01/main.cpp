@@ -1,43 +1,29 @@
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
 
-int main() {
-	std::cout << "### TESTING CLAPTRAP ###\n" << std::endl;
-	{
-		std::cout << "\033[34mConstructing\033[0m" << std::endl;
-		ClapTrap a;
-		ClapTrap b("Cody");
+int main()
+{
+    ScavTrap agatangexos("Agatangexos");
+    ScavTrap vaspurak("Vaspurak");
+    ScavTrap gaspar("Gasparcho");
 
-		std::cout << "\033[34mTesting\033[0m" << std::endl;
-		a.attack("some other robot");
-		a.takeDamage(10);
-		a.takeDamage(10);
-		a.beRepaired(5);
-		a.attack("some other other robot");
-		b.beRepaired(3);
-		for (int i = 0; i < 12; i++)
-			b.attack("Cody-clone");
-		b.beRepaired(3);
-		std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
-	}
-	std::cout << "\n\n### TESTING SCAVTRAP ###\n" << std::endl;
-	{
-		std::cout << "\033[34mConstructing\033[0m" << std::endl;
-		ScavTrap c;
-		ScavTrap d("Savage");
+    std::cout << "-------------------------------" << std::endl;
 
-		std::cout << "\033[34mTesting\033[0m" << std::endl;
-		c.attack("CloneTrap");
-		c.beRepaired(22);
-		c.takeDamage(21);
-		c.beRepaired(22);
-		c.guardGate();
-		c.guardGate();
-		d.attack("Savage-clone");
-		d.takeDamage(101);
-		d.takeDamage(15);
-		d.attack("ScavTrap-clone");
-		std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
-	}
-	return (0);
+    agatangexos.attack("Gasparcho");
+    agatangexos.attack("Vaspurak");
+    gaspar.takeDamage(20);
+    vaspurak.takeDamage(20);
+    vaspurak.attack("Gasparcho");
+    gaspar.takeDamage(20);
+    agatangexos.guardGate();
+    agatangexos.attack("Gasparcho");
+    gaspar.takeDamage(20);
+    agatangexos.guardGate();
+    vaspurak.beRepaired(14);
+    vaspurak.attack("Agatangexos");
+    vaspurak.guardGate();
+    while(agatangexos.getHitPoints() != 0)
+        agatangexos.takeDamage(20);
+    vaspurak.guardGate();
+    std::cout << "-------------------------------" << std::endl;
 }

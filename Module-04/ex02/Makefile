@@ -1,4 +1,4 @@
-NAME = WorldOnFire
+NAME = AbstractClass
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp \
 	  Animal.cpp \

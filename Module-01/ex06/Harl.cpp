@@ -37,38 +37,44 @@ void Harl::error(void)
     std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
+std::string ft_toupper(std::string str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] = (char)std::toupper(str[i]);
+    }
+    return (str);
+}
+
 void Harl::complain(std::string level)
 {
     void (Harl::*ptr_to_complain[4])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
     std::string lvls[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     int i;
+    int index = -1;
 
     for (i = 0; i < 4; i++)
     {
-        if (lvls[i] == level)
+        if (lvls[i] == ft_toupper(level))
+        {
+            index = i;
             break;
+        }
     }
-    switch (i)
+    switch (index)
     {
         case 0:
             (this->*ptr_to_complain[0])();
-            (this->*ptr_to_complain[1])();
-            (this->*ptr_to_complain[2])();
-            (this->*ptr_to_complain[3])();
-            break;
         case 1:
             (this->*ptr_to_complain[1])();
-            (this->*ptr_to_complain[2])();
-            (this->*ptr_to_complain[3])();
-            break;
         case 2:
             (this->*ptr_to_complain[2])();
-            (this->*ptr_to_complain[3])();
-            break;
         case 3:
             (this->*ptr_to_complain[3])();
             break;
         default:
             std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+            break;
     }
 }

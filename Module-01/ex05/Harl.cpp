@@ -39,6 +39,16 @@ void Harl::error(void)
     std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
+std::string ft_toupper(std::string str)
+{
+    for (int i = 0; str[i]; i++)
+    {
+        if (str[i] >= 'a' && str[i] <= 'z')
+            str[i] = (char)std::toupper(str[i]);
+    }
+    return (str);
+}
+
 void Harl::complain(std::string level)
 {
     void (Harl::*ptr_to_complain[4])(void) = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
@@ -46,7 +56,7 @@ void Harl::complain(std::string level)
 
     for (int i = 0; i < 4; i++)
     {
-        if (lvls[i] == level)
+        if (lvls[i] == ft_toupper(level))
         {
             (this->*ptr_to_complain[i])();
             break;

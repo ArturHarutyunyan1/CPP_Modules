@@ -28,7 +28,7 @@ Fixed& Fixed::operator=(const Fixed &f)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &f)
-        _fixedPoint = f.getRawBits();
+        this->_fixedPoint = f.getRawBits();
     return (*this);
 }
 

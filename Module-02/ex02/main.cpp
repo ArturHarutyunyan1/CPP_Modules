@@ -7,6 +7,7 @@ int main() {
     Fixed d(21.5f);      // Another Fixed with value 21.5
 
     // Testing Comparison Operators
+    std::cout << "a - " << a << "\nb - " << b << "\nc - " << c << "\nd - " << d << std::endl;
     std::cout << "Testing Comparison Operators:" << std::endl;
     std::cout << (a > b) << " (a > b)" << std::endl; // Expect 1 (true)
     std::cout << (a < b) << " (a < b)" << std::endl; // Expect 0 (false)

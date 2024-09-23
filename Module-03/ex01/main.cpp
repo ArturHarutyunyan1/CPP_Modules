@@ -3,27 +3,21 @@
 
 int main()
 {
-    ScavTrap agatangexos("Agatangexos");
-    ScavTrap vaspurak("Vaspurak");
-    ScavTrap gaspar("Gasparcho");
-
-    std::cout << "-------------------------------" << std::endl;
-
-    agatangexos.attack("Gasparcho");
-    agatangexos.attack("Vaspurak");
-    gaspar.takeDamage(20);
-    vaspurak.takeDamage(20);
-    vaspurak.attack("Gasparcho");
-    gaspar.takeDamage(20);
-    agatangexos.guardGate();
-    agatangexos.attack("Gasparcho");
-    gaspar.takeDamage(20);
-    agatangexos.guardGate();
-    vaspurak.beRepaired(14);
-    vaspurak.attack("Agatangexos");
-    vaspurak.guardGate();
-    while(agatangexos.getHitPoints() != 0)
-        agatangexos.takeDamage(20);
-    vaspurak.guardGate();
-    std::cout << "-------------------------------" << std::endl;
+    std::cout << "Constructing\n-------------------------" << std::endl;
+    ScavTrap a("Harry Potter");
+    ScavTrap c("Albus Dumbledore");
+    ScavTrap copy(c);
+    std::cout << "Epic battle starts\n-------------------------" << std::endl;
+    a.guardGate();
+    a.attack("Albus Dumbledore");
+    c.takeDamage(20);
+    c.attack("Harry Potter");
+    a.takeDamage(20);
+    a.beRepaired(5);
+    c.attack("Harry Potter");
+    a.takeDamage(20);
+    a.guardGate();
+    while (c.getHitPoints() != 0)
+        c.takeDamage(20);
+    std::cout << "Epic battle end\n-------------------------" << std::endl;
 }

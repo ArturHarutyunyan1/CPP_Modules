@@ -21,13 +21,13 @@ ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name)
 
 ScavTrap::ScavTrap(const ScavTrap &copy) : ClapTrap(copy)
 {
-    std::cout << "ClapTrap: " << copy._name << " was copied" << std::endl;
+    std::cout << "ScavTrap: " << copy._name << " was copied" << std::endl;
     this->_guard = false;
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &copy)
 {
-    std::cout << "ClapTrap: Assignment operator for " << copy._name << " was called" << std::endl;
+    std::cout << "ScavTrap: Assignment operator for " << copy._name << " was called" << std::endl;
     if (this != &copy)
     {
         this->_name = copy._name;
@@ -42,6 +42,19 @@ ScavTrap &ScavTrap::operator=(const ScavTrap &copy)
 ScavTrap::~ScavTrap(void)
 {
     std::cout << "ScavTrap: " << this->_name << " was destroyed :(" << std::endl;
+}
+
+void ScavTrap::attack(const std::string &target)
+{
+    if (this->_hitPoints > 0 && this->_energyPoints > 0)
+    {
+        std::cout << "ScavTrap: " << this->_name << " attacks " << target << " causing to lose " << this->_attackDamage << " point(s) of damage" << std::endl;
+        this->_energyPoints--;
+    }
+    else if (this->_hitPoints == 0)
+        std::cout << "ScavTrap: " << this->_name << " was unable to attack " << target << " because he's out of hit points" << std::endl;
+    else
+        std::cout << "ScavTrap: " << this->_name << " was unable to attack " << target << " because he's out of energy points" << std::endl;
 }
 
 void ScavTrap::guardGate(void)

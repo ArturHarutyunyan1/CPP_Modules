@@ -5,27 +5,25 @@
 
 int main()
 {
-    DiamondTrap agatangexos("Agatangexos");
-    DiamondTrap vaspurak("Vaspurak");
-    DiamondTrap gaspar("Gasparcho");
-
-    std::cout << "-------------------------------" << std::endl;
-
-    agatangexos.attack("Gasparcho");
-    agatangexos.attack("Vaspurak");
-    gaspar.takeDamage(30);
-    vaspurak.takeDamage(30);
-    vaspurak.attack("Gasparcho");
-    gaspar.takeDamage(30);
-    agatangexos.highFivesGuys();
-    agatangexos.attack("Gasparcho");
-    gaspar.takeDamage(30);
-    agatangexos.highFivesGuys();
-    gaspar.whoAmI();
-    vaspurak.beRepaired(50);
-    vaspurak.attack("Agatangexos");
-    while(agatangexos.getHitPoints() > 0)
-        agatangexos.takeDamage(30);
-    vaspurak.highFivesGuys();
-    std::cout << "-------------------------------" << std::endl;
+    std::cout << "Constructing\n-------------------------" << std::endl;
+    DiamondTrap a("Harry Potter");
+    DiamondTrap c("Albus Dumbledore");
+    DiamondTrap copy(c);
+    std::cout << "Epic battle starts\n-------------------------" << std::endl;
+    a.highFivesGuys();
+    a.attack("Albus Dumbledore");
+    c.guardGate();
+    c.takeDamage(30);
+    c.attack("Harry Potter");
+    a.takeDamage(30);
+    c.whoAmI();
+    a.beRepaired(30);
+    c.guardGate();
+    c.attack("Harry Potter");
+    a.takeDamage(30);
+    a.whoAmI();
+    a.highFivesGuys();
+    while (c.getHitPoints() != 0)
+        c.takeDamage(30);
+    std::cout << "Epic battle end\n-------------------------" << std::endl;
 }

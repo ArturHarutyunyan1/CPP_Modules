@@ -41,11 +41,6 @@ DiamondTrap::~DiamondTrap(void)
     std::cout << "DiamondTrap: " << this->_name << " was destroyed :((" << std::endl;
 }
 
-void DiamondTrap::attack(const std::string &target)
-{
-    ClapTrap::attack(target);
-}
-
 void DiamondTrap::whoAmI(void)
 {
     std::cout << "My DiamondTrap name is " << this->_name << " but my ClapTrap name is " << ClapTrap::_name << std::endl;

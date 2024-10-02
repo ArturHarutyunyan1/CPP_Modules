@@ -2,22 +2,19 @@
 
 int main()
 {
-    ClapTrap agatangexos("Agatangexos");
-    ClapTrap vaspurak("Vaspurak");
-    ClapTrap gaspar("Gasparcho");
-
-    std::cout << "-------------------------------" << std::endl;
-
-    agatangexos.attack("Gasparcho");
-    agatangexos.attack("Vaspurak");
-    gaspar.takeDamage(7);
-    vaspurak.takeDamage(5);
-    vaspurak.attack("Gasparcho");
-    gaspar.takeDamage(3);
-    agatangexos.attack("Gasparcho");
-    gaspar.takeDamage(5);
-    vaspurak.beRepaired(5);
-    vaspurak.attack("Agatangexos");
-    agatangexos.takeDamage(10);
-    std::cout << "-------------------------------" << std::endl;
+    std::cout << "Constructing\n-------------------------" << std::endl;
+    ClapTrap a("Harry Potter");
+    ClapTrap c("Albus Dumbledore");
+    ClapTrap copy(c);
+    std::cout << "Epic battle starts\n-------------------------" << std::endl;
+    a.attack("Albus Dumbledore");
+    c.takeDamage(20);
+    c.attack("Harry Potter");
+    a.takeDamage(20);
+    a.beRepaired(5);
+    c.attack("Harry Potter");
+    a.takeDamage(20);
+    while (c.getHitPoints() != 0)
+        c.takeDamage(20);
+    std::cout << "Epic battle end\n-------------------------" << std::endl;
 }

@@ -15,7 +15,7 @@ class ClapTrap
         ClapTrap(const std::string &name);
         ClapTrap(const ClapTrap &copy);
         ClapTrap &operator=(const ClapTrap &copy);
-        virtual ~ClapTrap();
+        ~ClapTrap();
         std::string getName(void) const;
         unsigned int getHitPoints(void) const;
         unsigned int getEnergyPoints(void) const;

@@ -7,7 +7,7 @@ Bureaucrat::Bureaucrat() : _name("Default"), _grade(150)
 
 Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
 {
-    std::cout << "Parameterized constructor for " << name << " called" << std::endl;
+    std::cout << "Parameterized constructor for " << this->getName() << " called" << std::endl;
     if (grade > 150)
         throw Bureaucrat::GradeTooLowException();
     else if (grade < 1)
@@ -57,6 +57,20 @@ void Bureaucrat::decrementGrade()
     std::cout << "Decrementing grade for " << this->getName() << std::endl;
     if (++this->_grade > 150)
         throw Bureaucrat::GradeTooLowException();
+}
+
+void Bureaucrat::signForm(Form &form)
+{
+    try
+    {
+        form.beSigned(*this);
+        std::cout << this->getName() << " signed " << form.getName() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << this->getName() << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+    }
+    
 }
 
 const char *Bureaucrat::GradeTooHighException::what(void) const throw()

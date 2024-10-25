@@ -14,7 +14,7 @@ class Form
         const int _exec;
     public:
         Form();
-        Form(const std::string name, bool isSigned, const int sign, const int exec);
+        Form(std::string name, int sign, int exec);
         Form(const Form &copy);
         Form &operator=(const Form &copy);
         ~Form();

@@ -5,7 +5,7 @@ Bureaucrat::Bureaucrat() : _name("Default"), _grade(150)
     std::cout << "Default constructor called" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
+Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 {
     std::cout << "Parameterized constructor for " << this->getName() << " called" << std::endl;
     if (grade > 150)

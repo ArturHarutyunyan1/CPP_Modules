@@ -14,7 +14,7 @@ class AForm
         const int _exec;
     public:
         AForm();
-        AForm(const std::string name, bool isSigned, const int sign, const int exec);
+        AForm(std::string name, int sign, int exec);
         AForm(const AForm &copy);
         AForm &operator=(const AForm &copy);
         virtual ~AForm();

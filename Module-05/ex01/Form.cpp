@@ -5,7 +5,7 @@ Form::Form() : _name("Default"), _isSigned(false), _sign(75), _exec(75)
     std::cout << "Default constructor called" << std::endl;
 }
 
-Form::Form(const std::string name, bool isSigned, const int sign, const int exec) : _name(name), _isSigned(isSigned), _sign(sign), _exec(exec)
+Form::Form(std::string name, int sign, int exec) : _name(name), _isSigned(false), _sign(sign), _exec(exec)
 {
     std::cout << "Constructor for " << name << " called" << std::endl;
     if (sign < 1 || exec < 1)

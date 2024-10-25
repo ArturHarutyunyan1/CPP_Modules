@@ -5,7 +5,7 @@ Bureaucrat::Bureaucrat() : _name("Default"), _grade(150)
     std::cout << "Default constructor called" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
+Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 {
     std::cout << "Parameterized constructor for " << name << " called" << std::endl;
     if (grade > 150)
@@ -69,8 +69,8 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw()
     return ("Grade is too low!");
 }
 
-std::ostream &operator<<(std::ostream &o, Bureaucrat &Bureaucrat)
+std::ostream &operator<<(std::ostream &o, const Bureaucrat &bureaucrat)
 {
-    o << Bureaucrat.getName() << ", bureaucrat grade " << Bureaucrat.getGrade() << std::endl;
-    return (o);
+    o << "Name " << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+    return o;
 }

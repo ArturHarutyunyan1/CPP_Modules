@@ -1,11 +1,11 @@
 #include "RobotomyRequestForm.hpp"
 
-RobotomyRequestForm::RobotomyRequestForm() : AForm("Default", 72, 45), _target("Default")
+RobotomyRequestForm::RobotomyRequestForm() : AForm("Default", false, 72, 45), _target("Default")
 {
     std::cout << "Default constructor" << std::endl;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm(target, 72, 45), _target(target)
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm(target, false, 72, 45), _target(target)
 {
     std::cout << "Constructor for " << target << " called" << std::endl;
 }
@@ -34,8 +34,10 @@ RobotomyRequestForm::~RobotomyRequestForm()
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const
 {
     AForm::execute(executor);
+    srand(time(0));
+    int r = rand();
     std::cout << "DRrrrrrrrrRRRrrrRRRRRrrrRRRRRrrrRRR" << std::endl;
-    if ((std::rand() % 2) == 0)
+    if ((r % 2) == 0)
         std::cout << _target << " has been robotomized successfully" << std::endl;
     else
         std::cout << "Robotomy failed for " << _target << std::endl;

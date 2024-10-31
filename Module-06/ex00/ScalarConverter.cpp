@@ -226,7 +226,7 @@ void toDouble(std::string str)
     {
         if (str.size() == 1)
         {
-            x = static_cast<float>(str[0]);
+            x = static_cast<double>(str[0]);
             std::cout << "float: " << x << std::endl;
             return;
         }
@@ -243,7 +243,7 @@ void toDouble(std::string str)
             std::cout << "float: impossible" << std::endl;
         else
         {
-            x = static_cast<float>(temp);
+            x = static_cast<double>(temp);
             std::cout << "float: " << x << std::endl;
         }
     }

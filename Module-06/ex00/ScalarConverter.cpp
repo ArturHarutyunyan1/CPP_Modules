@@ -186,31 +186,24 @@ void toInt(std::string str)
 void toFloat(std::string str)
 {
     float x;
-    long long temp;
     if (!isNum(str) && !isFloat(str))
     {
         if (str.size() == 1)
         {
             x = static_cast<float>(str[0]);
-            std::cout << std::fixed << std::setprecision(1) << "float: " << x << "f" << std::endl;
+            std::cout << std::fixed << std::setprecision(str.size()) << "float: " << x << "f" << std::endl;
             return;
         }
         else
         {
-            std::cout << "float: invalid input" << std::endl;
+            std::cout << "float: imposibble" << std::endl;
             return;
         }
     }
     try
     {
-        temp = std::stof(str);
-        if (temp > std::numeric_limits<int>::max() || temp < std::numeric_limits<int>::min())
-            std::cout << "float: impossible" << std::endl;
-        else
-        {
-            x = static_cast<float>(temp);
-            std::cout << std::fixed << std::setprecision(1) << "float: " << x << "f" << std::endl;
-        }
+        x = std::stof(str);
+        std::cout << std::fixed << std::setprecision(str.size()) << "float: " << x << "f" << std::endl;
     }
     catch (const std::out_of_range&)
     {
@@ -221,35 +214,28 @@ void toFloat(std::string str)
 void toDouble(std::string str)
 {
     double x;
-    long long temp;
     if (!isNum(str) && !isFloat(str))
     {
         if (str.size() == 1)
         {
             x = static_cast<double>(str[0]);
-            std::cout << "float: " << x << std::endl;
+            std::cout << "double: " << x << std::endl;
             return;
         }
         else
         {
-            std::cout << "float: invalid input" << std::endl;
+            std::cout << "double: invalid input" << std::endl;
             return;
         }
     }
     try
     {
-        temp = std::stof(str);
-        if (temp > std::numeric_limits<int>::max() || temp < std::numeric_limits<int>::min())
-            std::cout << "float: impossible" << std::endl;
-        else
-        {
-            x = static_cast<double>(temp);
-            std::cout << "float: " << x << std::endl;
-        }
+        x = std::stof(str);
+        std::cout << "double: " << x << std::endl;
     }
     catch (const std::out_of_range&)
     {
-        std::cout << "float: impossible" << std::endl;
+        std::cout << "double: impossible" << std::endl;
     }
 }
 

@@ -8,7 +8,6 @@ Span::Span() : arr(0), n(0)
 Span::Span(unsigned int N) : arr(), n(N)
 {
     std::cout << "Constructor with parameter called" << std::endl;
-    arr.reserve(n);
 }
 
 Span::Span(const Span &copy) : n(copy.n)
@@ -48,13 +47,18 @@ int Span::shortestSpan() const
     std::vector<int> sortedList = arr;
     std::sort(sortedList.begin(), sortedList.end());
     int min = std::numeric_limits<int>::max();
-
+    int lastIndex1 = 0, lastIndex2 = 1;
     for (size_t i = 1; i < sortedList.size(); i++)
     {
         int span = sortedList[i] - sortedList[i - 1];
         if (span < min)
+        {
             min = span;
+            lastIndex1 = i - 1;
+            lastIndex2 = i;
+        }
     }
+    std::cout << "(" << sortedList[lastIndex2] << " - " << sortedList[lastIndex1] <<") ";
     return (min);
 }
 
@@ -75,5 +79,6 @@ int Span::longestSpan() const
         if (max < arr[i])
             max = arr[i];
     }
+    std::cout << "(" << max << " - " << min <<") ";
     return (max - min);
 }

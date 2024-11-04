@@ -1,65 +1,112 @@
 #include "Span.hpp"
 
-int main() {
-    srand(time(0));
-    try {
-        // Test case 1: Basic functionality with 5 elements
-        Span sp1(5);
-        sp1.addNumber(6);
-        sp1.addNumber(3);
-        sp1.addNumber(17);
-        sp1.addNumber(9);
-        sp1.addNumber(11);
-        
-        std::cout << "Shortest span: " << sp1.shortestSpan() << std::endl; // Expected output: 2
-        std::cout << "Longest span: " << sp1.longestSpan() << std::endl;   // Expected output: 14
+int main()
+{
+    // Default constructor
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Testing default constructor" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;
+        Span s1 = Span();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << '\n';
+    }
+    // Default constructor out of range
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Default constructor out of range exception" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;
+        Span s2 = Span();
+        s2.addNumber(1);
+        s2.addNumber(5);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << '\n';
+    }
+    // Test add number
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Test add number function" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;
+        Span s3 = Span(10);
 
-        // Test case 2: Attempting to add more than N elements
-        try {
-            sp1.addNumber(20); // Should throw an exception
-        } catch (const std::exception &e) {
-            std::cout << "Exception: " << e.what() << std::endl; // Expect a message indicating capacity reached
-        }
+        s3.addNumber(4);
+        s3.addNumber(213);
+        s3.addNumber(1);
+        s3.addNumber(99);
+        s3.addNumber(-13);
+        s3.addNumber(400);
+        s3.addNumber(123);
+        s3.addNumber(9889);
+        s3.addNumber(31251);
+        s3.addNumber(411);
+        std::cout << "Shortest span - " << s3.shortestSpan() << "\nLargest span - " << s3.longestSpan() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+    // Constructor with parameters out of range
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Test out of range exception" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;
+        Span s4 = Span(3);
 
-        // Test case 3: Testing with fewer than 2 numbers
-        Span sp2(2);
-        try {
-            std::cout << sp2.shortestSpan() << std::endl; // Should throw an exception
-        } catch (const std::exception &e) {
-            std::cout << "Exception: " << e.what() << std::endl; // Expect a message indicating not enough elements
-        }
+        s4.addNumber(1);
+        s4.addNumber(1);
+        s4.addNumber(1);
+        s4.addNumber(1);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << '\n';
+    }
+    // Add range of numbers using array of ints
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Test add range of numbers with array of ints" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;
+        Span s5 = Span(10);
 
-        // Test case 4: Adding only 1 number
-        sp2.addNumber(5);
-        try {
-            std::cout << sp2.shortestSpan() << std::endl; // Should throw an exception
-        } catch (const std::exception &e) {
-            std::cout << "Exception: " << e.what() << std::endl; // Expect a message indicating not enough elements
-        }
+        int n[] = {200, -150, 50, 20, -5, 90};
+        s5.addRange(n, n + 6);
+        std::cout << "Shortest span - " << s5.shortestSpan() << "\nLargest span - " << s5.longestSpan() << std::endl;        
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << '\n';
+    }
+    // Add range of numbers using array of vectors
+    try
+    {
+        std::cout << "------------------------------------------" << std::endl;
+        std::cout << "Test add range of numbers with vector" << std::endl;
+        std::cout << "------------------------------------------" << std::endl;        
 
-        // Test case 5: Filling Span with a range of iterators
-        Span sp3(10000);
-        std::vector<int> numbers;
-        for (int i = 0; i < 10; ++i) {
-            numbers.push_back(rand() % 999999 + 1); // Random numbers between 0 and 99999
-        }
-        sp3.addRange(numbers.begin(), numbers.end());
-        
-        // Test spans
-        std::cout << "Shortest span after filling with 10000 random numbers: " << sp3.shortestSpan() << std::endl;
-        std::cout << "Longest span after filling with 10000 random numbers: " << sp3.longestSpan() << std::endl;
+        Span s6 = Span(10);
+        std::vector<int> nums;
 
-        // Test case 6: Edge case with negative values
-        Span sp4(3);
-        sp4.addNumber(-5);
-        sp4.addNumber(-1);
-        sp4.addNumber(-8);
-        
-        std::cout << "Shortest span with negative values: " << sp4.shortestSpan() << std::endl; // Expected output: 2
-        std::cout << "Longest span with negative values: " << sp4.longestSpan() << std::endl;   // Expected output: 7
+        nums.push_back(-999);
+        nums.push_back(-500);
+        nums.push_back(50);
+        nums.push_back(500);
+        nums.push_back(999);
 
-    } catch (const std::exception &e) {
-        std::cout << "Unhandled exception: " << e.what() << std::endl;
+        s6.addRange(nums.begin(), nums.end());
+        std::cout << "Shortest span - " << s6.shortestSpan() << "\nLargest span - " << s6.longestSpan() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception caught: " << e.what() << '\n';
     }
     
     return 0;

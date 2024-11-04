@@ -12,7 +12,7 @@ int main()
 
     try
     {
-        std::vector<int>::iterator r = easyfind(numbers, 5);
+        std::vector<int>::iterator r = easyfind(numbers, 4);
         std::cout << "Found value " << *r << std::endl;
     }
     catch(const std::exception& e)

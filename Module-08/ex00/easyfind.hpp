@@ -6,13 +6,13 @@
 #include <algorithm>
 
 template <typename T>
-typename T::iterator easyfind(T &arr, int val)
+typename T::iterator easyfind(T &arr, int n)
 {
-   typename T::iterator n = std::find(arr.begin(), arr.end(), val);
+    typename T::iterator it = std::find(arr.begin(), arr.end(), n);
 
-    if (n == arr.end())
+    if (it == arr.end())
         throw std::runtime_error("No occurance found");
-    return (n);
+    return (it);
 }
 
 #endif

@@ -13,4 +13,5 @@ int main(int argc, char **argv)
         BitcoinExchange b = BitcoinExchange();
         b.processInput(argv[1]);
     }
+    return (0);
 }

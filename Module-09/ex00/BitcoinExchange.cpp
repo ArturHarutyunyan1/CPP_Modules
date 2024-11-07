@@ -150,7 +150,44 @@ void BitcoinExchange::processLine(std::string key, std::string value)
     processDate(key);
     long long temp;
 
-    temp = std::stoll(value);
+    for (size_t i = 0; i < key.size(); i++)
+    {
+        if ((!std::isdigit(key[i]) && key[i] != '-') || key.size() > 10)
+        {
+            std::cerr << "Error: Bad input => " << key << std::endl;
+            return; 
+        }
+    }
+    for (size_t i = 0; i < value.size(); i++)
+    {
+        if (!std::isdigit(value[i]) && value[i] != '-' && value[i] != '.')
+        {
+            std::cerr << "Error: Bad input => " << value << std::endl;
+            return;
+        }
+        
+        if ((value[i] == '-' && i != 0) || (value[i] == '.' && (i == 0 || i == value.size() - 1 || value.find('.') != i)))
+        {
+            std::cerr << "Error: Bad input => " << value << std::endl;
+            return;
+        }
+        
+        if (std::isdigit(value[i]) && i + 1 < value.size() && !std::isdigit(value[i + 1]) && value[i + 1] != '.' && value[i + 1] != '-')
+        {
+            std::cerr << "Error: Bad input => " << value << std::endl;
+            return;
+        }
+    }
+
+    try
+    {
+        temp = std::stoll(value);
+    }
+    catch (...)
+    {
+        std::cerr << "Error: Exception caught" << std::endl;
+        return;
+    }
     if (temp > 1000)
     {
         std::cerr << "Error: too large a number." << std::endl;

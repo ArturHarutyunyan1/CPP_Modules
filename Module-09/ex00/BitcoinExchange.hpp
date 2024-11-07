@@ -8,6 +8,7 @@
 #include <exception>
 #include <cstdlib>
 #include <regex>
+#include <cmath>
 
 class BitcoinExchange
 {

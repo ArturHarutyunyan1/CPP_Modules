@@ -70,9 +70,10 @@ void processDate(std::string date)
         std::cerr << "Error: bad input. Correct format => YEAR-MONTH-DAY" << std::endl;
         return;
     }
-    int year = std::stoi(date.substr(0, 4));
-    int month = std::stoi(date.substr(5, 2));
-    int day = std::stoi(date.substr(8, 2));
+    int dash = date.find('-');
+    int year = std::stoi(date.substr(0, dash));
+    int month = std::stoi(date.substr(dash, 2));
+    int day = std::stoi(date.substr(dash + 2, 2));
 
     if (month == 2)
     {

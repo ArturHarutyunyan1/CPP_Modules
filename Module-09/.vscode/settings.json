@@ -52,6 +52,7 @@
         "variant": "cpp",
         "vector": "cpp",
         "regex": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "stack": "cpp"
     }
 }

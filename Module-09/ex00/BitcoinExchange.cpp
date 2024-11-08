@@ -10,6 +10,7 @@ BitcoinExchange::BitcoinExchange()
         std::cerr << "Can't open file - data.csv" << std::endl;
         exit(1);
     }
+    std::getline(file, line);
     while (std::getline(file, line))
     {
         size_t pos = line.find(',');
@@ -24,8 +25,12 @@ BitcoinExchange::BitcoinExchange()
             value.erase(0, value.find_first_not_of(" \t"));
             value.erase(value.find_last_not_of(" \t") + 1);
 
-            if (!key.empty() && !value.empty())
+            if (validateData(key, value))
                 data[key] = value;
+        }
+        else
+        {
+            std::cerr << "Error: bad input => " << line << std::endl;
         }
     }
     file.close();
@@ -47,6 +52,7 @@ BitcoinExchange::~BitcoinExchange()
 {
 
 }
+
 
 bool isFloat(const std::string str)
 {
@@ -101,6 +107,40 @@ void processDate(std::string date)
         }
     }
 }
+bool BitcoinExchange::validateData(std::string key, std::string value)
+{
+    processDate(key);
+    for (size_t i = 0; i < value.size(); i++)
+    {
+        if (!std::isdigit(value[i]) && value[i] != '.')
+        {
+            std::cerr << "Error: Invalid number" << std::endl;
+            return (false);
+        }
+    }
+    try
+    {
+        double x = std::stod(value);
+
+        if (x < 0)
+        {
+            std::cerr << "Error: Negative number" << std::endl;
+            return (false);
+        }
+        if (x > std::numeric_limits<int>::max())
+        {
+            std::cerr << "Error: Too large a number" << std::endl;
+            return (false);
+        }
+    }
+    catch(...)
+    {
+        std::cerr << "Error: Exception caught" << std::endl;
+        return (false);
+    }
+    return (true);
+}
+
 template <typename T>
 void BitcoinExchange::checkOccrrence(std::string key, T value)
 {
@@ -117,7 +157,7 @@ void BitcoinExchange::checkOccrrence(std::string key, T value)
             if (std::floor(res) == res)
                 std::cout << findDate->first << " => " << value << " = " << static_cast<int>(res) << std::endl;
             else
-                std::cout << findDate->first << " => " << value << " = " << std::fixed << std::setprecision(1) << res << std::endl;
+                std::cout << findDate->first << " => " << value << " = " << std::fixed << std::setprecision(2) << res << std::endl;
         }
         else
             std::cout << findDate->first << " => " << value << " = " << res << std::endl;
@@ -138,7 +178,7 @@ void BitcoinExchange::checkOccrrence(std::string key, T value)
             if (std::floor(res) == res)
                 std::cout << key << " => " << value << " = " << static_cast<int>(res) << std::endl;
             else
-                std::cout << key << " => " << value << " = " << std::fixed << std::setprecision(1) << res << std::endl;
+                std::cout << key << " => " << value << " = " << std::fixed << std::setprecision(2) << res << std::endl;
         }
         else
             std::cout << key << " => " << value << " = " << res << std::endl;

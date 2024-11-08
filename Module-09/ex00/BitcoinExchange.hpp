@@ -20,6 +20,7 @@ class BitcoinExchange
         template <typename T>
         void checkOccrrence(std::string key, T value);
         void processLine(std::string key, std::string value);
+        bool validateData(std::string key, std::string value);
         ~BitcoinExchange();
     private:
         std::map<std::string, std::string> data;

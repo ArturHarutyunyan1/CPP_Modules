@@ -193,12 +193,12 @@ void PmergeMe::processInput(int argc, char **argv)
         num = std::stol(argv[i]);
         if (num < 0)
         {
-            std::cerr << "Only positive numbers allowed" << std::endl;
+            std::cout << "Only positive numbers allowed" << std::endl;
             exit (1);
         }
         if (num > std::numeric_limits<int>::max())
         {
-            std::cerr << "Too large value" << std::endl;
+            std::cout << "Too large value" << std::endl;
             exit (1);
         }
         vectorList.push_back(num);

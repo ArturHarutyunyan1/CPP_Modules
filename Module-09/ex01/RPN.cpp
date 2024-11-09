@@ -64,10 +64,10 @@ void RPN::ReversePolishNotation(char *input)
                 std::cout << "Error: Not enough operands" << std::endl;
                 exit (1);
             }
-            int b = arr.top(); arr.pop();
-            int a = arr.top(); arr.pop();
+            long b = arr.top(); arr.pop();
+            long a = arr.top(); arr.pop();
 
-            int result;
+            long result = 0;
             switch (str[i])
             {
             case '+':
@@ -90,6 +90,11 @@ void RPN::ReversePolishNotation(char *input)
             default:
                 std::cout << "Unknown operator" << std::endl;
                 break;
+            }
+            if (result > std::numeric_limits<int>::max())
+            {
+                std::cout << "Error: Overflow caught" << std::endl;
+                exit (1);
             }
             arr.push(result);
             ++i;

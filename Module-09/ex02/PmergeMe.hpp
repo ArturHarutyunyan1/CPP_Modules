@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <ctime>
 #include <iomanip>
+#include <cmath>
 
 class PmergeMe
 {

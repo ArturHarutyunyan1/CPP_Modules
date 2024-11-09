@@ -69,76 +69,66 @@ bool isFloat(const std::string str)
 
 void processDate(std::string date)
 {
-    std::regex pattern ("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$");
+    int firstDash = date.find('-');
+    int secondDash = date.find('-', firstDash + 1);
 
-    if (!std::regex_match(date, pattern))
-    {
-        std::cerr << "Error: bad input. Correct format => YEAR-MONTH-DAY" << std::endl;
-        return;
+    if (date.size() > 10 || date[4] != '-' || date[7] != '-')
+        throw std::invalid_argument("Error: Date must be in the format YYYY-MM-DD");
+    int year, month, day;
+    try {
+        year = std::stoi(date.substr(0, firstDash));
+        month = std::stoi(date.substr(firstDash + 1, secondDash - firstDash - 1));
+        day = std::stoi(date.substr(secondDash + 1));
+        if (year <= 0 || month <= 0 || day <= 0)
+            throw std::out_of_range("Error: Year, month, or day cannot be zero");
     }
-    int dash = date.find('-');
-    int year = std::stoi(date.substr(0, dash));
-    int month = std::stoi(date.substr(dash, 2));
-    int day = std::stoi(date.substr(dash + 2, 2));
+    catch (...)
+    {
+        throw std::invalid_argument("Error: Exception caught in date parsing");
+    }
 
     if (month == 2)
     {
         bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
         if ((isLeap && day > 29) || (!isLeap && day > 28))
-        {
-            std::cerr << "Error: invalid day for month" << std::endl;
-            return;
-        }
+            throw std::out_of_range("Error: Invalid day for February");
     }
     else if (month == 4 || month == 6 || month == 9 || month == 11)
     {
         if (day > 30)
-        {
-            std::cerr << "Error: 30 days in this month" << std::endl;
-            return;
-        }
+            throw std::out_of_range("Error: Invalid day for 30-day month");
     }
-    else
+    else if (day > 31)
     {
-        if (day > 31)
-        {
-            std::cerr << "Error: invalid day for month" << std::endl;
-            return;
-        }
+        throw std::out_of_range("Error: Invalid day for month");
     }
 }
+
 bool BitcoinExchange::validateData(std::string key, std::string value)
 {
-    processDate(key);
-    for (size_t i = 0; i < value.size(); i++)
-    {
-        if (!std::isdigit(value[i]) && value[i] != '.')
-        {
-            std::cerr << "Error: Invalid number" << std::endl;
-            return (false);
-        }
+    try {
+        processDate(key);
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << " => " << key << std::endl;
+        return false;
     }
-    try
-    {
-        double x = std::stod(value);
 
-        if (x < 0)
-        {
-            std::cerr << "Error: Negative number" << std::endl;
-            return (false);
+    try {
+        double x = std::stod(value);
+        if (x < 0) {
+            std::cerr << "Error: Negative number in data" << std::endl;
+            return false;
         }
-        if (x > std::numeric_limits<int>::max())
-        {
-            std::cerr << "Error: Too large a number" << std::endl;
-            return (false);
+        if (x > std::numeric_limits<int>::max()) {
+            std::cerr << "Error: Too large a number in data" << std::endl;
+            return false;
         }
+    } catch (...) {
+        std::cerr << "Error: Invalid number format in data" << std::endl;
+        return false;
     }
-    catch(...)
-    {
-        std::cerr << "Error: Exception caught" << std::endl;
-        return (false);
-    }
-    return (true);
+
+    return true;
 }
 
 template <typename T>
@@ -187,9 +177,21 @@ void BitcoinExchange::checkOccrrence(std::string key, T value)
 
 void BitcoinExchange::processLine(std::string key, std::string value)
 {
-    processDate(key);
+    if (!BitcoinExchange::validateData(key, value))
+        return;
     long long temp;
+    int dashCount = 0;
 
+    for (size_t i = 0; i < key.size(); i++)
+    {
+        if (key[i] == '-')
+            dashCount++;
+    }
+    if (dashCount != 2)
+    {
+        std::cerr << "Error: Invalid format YEAR-MONTH-DAY" << std::endl;
+        return;
+    }
     for (size_t i = 0; i < key.size(); i++)
     {
         if ((!std::isdigit(key[i]) && key[i] != '-') || key.size() > 10)

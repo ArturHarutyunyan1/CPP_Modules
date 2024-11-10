@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <regex>
 #include <cmath>
+#include <sstream>
+
 
 class BitcoinExchange
 {
@@ -25,5 +27,9 @@ class BitcoinExchange
     private:
         std::map<std::string, std::string> data;
 };
+
+long long stringToLong(const std::string &str);
+double stringToDouble(const std::string &str);
+bool isFloat(const std::string str);
 
 #endif

@@ -7,7 +7,7 @@ BitcoinExchange::BitcoinExchange()
 
     if (!file.is_open())
     {
-        std::cerr << "Can't open file - data.csv" << std::endl;
+        std::cout << "Can't open file - data.csv" << std::endl;
         exit(1);
     }
     std::getline(file, line);
@@ -30,7 +30,7 @@ BitcoinExchange::BitcoinExchange()
         }
         else
         {
-            std::cerr << "Error: bad input => " << line << std::endl;
+            std::cout << "Error: bad input => " << line << std::endl;
         }
     }
     file.close();
@@ -53,54 +53,40 @@ BitcoinExchange::~BitcoinExchange()
 
 }
 
-
-bool isFloat(const std::string str)
-{
-    try
-    {
-        std::stof(str);
-        return (true);
-    }
-    catch(...)
-    {
-        return (false);
-    }
-}
-
 void processDate(std::string date)
 {
-    int firstDash = date.find('-');
-    int secondDash = date.find('-', firstDash + 1);
+    size_t firstDash = date.find('-');
+    size_t secondDash = date.find('-', firstDash + 1);
 
     if (date.size() > 10 || date[4] != '-' || date[7] != '-')
-        throw std::invalid_argument("Error: Date must be in the format YYYY-MM-DD");
-    int year, month, day;
+        throw std::exception();
+    long year, month, day;
     try {
-        year = std::stoi(date.substr(0, firstDash));
-        month = std::stoi(date.substr(firstDash + 1, secondDash - firstDash - 1));
-        day = std::stoi(date.substr(secondDash + 1));
+        year = stringToLong(date.substr(0, firstDash));
+        month = stringToLong(date.substr(firstDash + 1, secondDash - firstDash - 1));
+        day = stringToLong(date.substr(secondDash + 1));
         if (year <= 0 || month <= 0 || day <= 0)
-            throw std::out_of_range("Error: Year, month, or day cannot be zero");
+            throw std::exception();
     }
     catch (...)
     {
-        throw std::invalid_argument("Error: Exception caught in date parsing");
+        throw std::exception();
     }
 
     if (month == 2)
     {
         bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
         if ((isLeap && day > 29) || (!isLeap && day > 28))
-            throw std::out_of_range("Error: Invalid day for February");
+            throw std::exception();
     }
     else if (month == 4 || month == 6 || month == 9 || month == 11)
     {
         if (day > 30)
-            throw std::out_of_range("Error: Invalid day for 30-day month");
+            throw std::exception();
     }
     else if (day > 31)
     {
-        throw std::out_of_range("Error: Invalid day for month");
+        throw std::exception();
     }
 }
 
@@ -108,23 +94,25 @@ bool BitcoinExchange::validateData(std::string key, std::string value)
 {
     try {
         processDate(key);
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << " => " << key << std::endl;
+    }
+    catch (...) {
+        std::cout << "Error: Invalid date format => " << key << std::endl;
         return false;
     }
 
     try {
-        double x = std::stod(value);
+        double x = stringToDouble(value);
         if (x < 0) {
-            std::cerr << "Error: Negative number in data" << std::endl;
+            std::cout << "Error: Negative number in data" << std::endl;
             return false;
         }
         if (x > std::numeric_limits<int>::max()) {
-            std::cerr << "Error: Too large a number in data" << std::endl;
+            std::cout << "Error: Too large a number in data" << std::endl;
             return false;
         }
-    } catch (...) {
-        std::cerr << "Error: Invalid number format in data" << std::endl;
+    }
+    catch (...) {
+        std::cout << "Error: Invalid number format in data" << std::endl;
         return false;
     }
 
@@ -137,17 +125,17 @@ void BitcoinExchange::checkOccrrence(std::string key, T value)
     std::map<std::string, std::string>::iterator findDate = data.find(key);
     double val;
     
-    val = std::atof(static_cast<std::string>(value).c_str());
+    val = stringToDouble(static_cast<std::string>(value).c_str());
 
     if (findDate != data.end())
     {
-        double res = val * std::atof(findDate->second.c_str());
-        if (isFloat(value))
+        double res = val * stringToDouble(findDate->second.c_str());
+        if (isFloat(static_cast<std::string>(value)))
         {
             if (std::floor(res) == res)
                 std::cout << findDate->first << " => " << value << " = " << static_cast<int>(res) << std::endl;
             else
-                std::cout << findDate->first << " => " << value << " = " << std::fixed << std::setprecision(2) << res << std::endl;
+                std::cout << findDate->first << " => " << value << " = " << res << std::endl;
         }
         else
             std::cout << findDate->first << " => " << value << " = " << res << std::endl;
@@ -156,19 +144,20 @@ void BitcoinExchange::checkOccrrence(std::string key, T value)
     {
         double closestValue = 0.0;
 
-        for (std::map<std::string, std::string>::iterator dataIt = data.begin(); dataIt != data.end(); ++dataIt) {
+        for (std::map<std::string, std::string>::iterator dataIt = data.begin(); dataIt != data.end(); ++dataIt)
+        {
             if (dataIt->first < key)
-                closestValue = std::atof(dataIt->second.c_str());
+                closestValue = stringToDouble(dataIt->second.c_str());
             else
                 break;
         }
         double res = val * closestValue;
-        if (isFloat(value))
+        if (isFloat(static_cast<std::string>(value)))
         {
             if (std::floor(res) == res)
                 std::cout << key << " => " << value << " = " << static_cast<int>(res) << std::endl;
             else
-                std::cout << key << " => " << value << " = " << std::fixed << std::setprecision(2) << res << std::endl;
+                std::cout << key << " => " << value << " = " << res << std::endl;
         }
         else
             std::cout << key << " => " << value << " = " << res << std::endl;
@@ -189,14 +178,14 @@ void BitcoinExchange::processLine(std::string key, std::string value)
     }
     if (dashCount != 2)
     {
-        std::cerr << "Error: Invalid format YEAR-MONTH-DAY" << std::endl;
+        std::cout << "Error: Invalid format YEAR-MONTH-DAY" << std::endl;
         return;
     }
     for (size_t i = 0; i < key.size(); i++)
     {
         if ((!std::isdigit(key[i]) && key[i] != '-') || key.size() > 10)
         {
-            std::cerr << "Error: Bad input => " << key << std::endl;
+            std::cout << "Error: Bad input => " << key << std::endl;
             return; 
         }
     }
@@ -204,44 +193,43 @@ void BitcoinExchange::processLine(std::string key, std::string value)
     {
         if (!std::isdigit(value[i]) && value[i] != '-' && value[i] != '.')
         {
-            std::cerr << "Error: Bad input => " << value << std::endl;
+            std::cout << "Error: Bad input => " << value << std::endl;
             return;
         }
         
         if ((value[i] == '-' && i != 0) || (value[i] == '.' && (i == 0 || i == value.size() - 1 || value.find('.') != i)))
         {
-            std::cerr << "Error: Bad input => " << value << std::endl;
+            std::cout << "Error: Bad input => " << value << std::endl;
             return;
         }
         
         if (std::isdigit(value[i]) && i + 1 < value.size() && !std::isdigit(value[i + 1]) && value[i + 1] != '.' && value[i + 1] != '-')
         {
-            std::cerr << "Error: Bad input => " << value << std::endl;
+            std::cout << "Error: Bad input => " << value << std::endl;
             return;
         }
     }
 
     try
     {
-        temp = std::stoll(value);
+        temp = stringToDouble(value);
     }
     catch (...)
     {
-        std::cerr << "Error: Exception caught" << std::endl;
+        std::cout << "Error: Exception caught" << std::endl;
         return;
     }
     if (temp > 1000)
     {
-        std::cerr << "Error: too large a number." << std::endl;
+        std::cout << "Error: too large a number." << std::endl;
         return;
     }
     else if (temp < 0)
     {
-        std::cerr << "Error: not a positive number." << std::endl;
+        std::cout << "Error: not a positive number." << std::endl;
         return;
     }
     BitcoinExchange::checkOccrrence(key, value);
-    
 }
 
 bool checkExtension(char *file)
@@ -252,8 +240,8 @@ bool checkExtension(char *file)
         i++;
     }
     if (file[i + 1] != 't' && file[i + 2] != 'x' && file[i + 3] != 't' && file[i + 4] != '\0')
-        return (false);
-    return (true);    
+        return false;
+    return true;    
 }
 
 void BitcoinExchange::processInput(char *filename)
@@ -263,13 +251,13 @@ void BitcoinExchange::processInput(char *filename)
 
     if (!checkExtension(filename))
     {
-        std::cerr << "Invalid file format. Correct format .txt" << std::endl;
-        exit (1);
+        std::cout << "Invalid file format. Correct format .txt" << std::endl;
+        exit(1);
     }
 
     if (!file.is_open())
     {
-        std::cerr << "Can't open file - " << filename << std::endl;
+        std::cout << "Can't open file - " << filename << std::endl;
         exit(1);
     }
     std::getline(file, line);
@@ -289,7 +277,7 @@ void BitcoinExchange::processInput(char *filename)
             processLine(key, value);
         }
         else
-            std::cerr << "Error: bad input => " << line << std::endl; 
+            std::cout << "Error: bad input => " << line << std::endl; 
     }
     file.close();
 }

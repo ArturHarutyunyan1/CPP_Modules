@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <exception>
 #include <cstdlib>
-#include <regex>
 #include <cmath>
 #include <sstream>
 

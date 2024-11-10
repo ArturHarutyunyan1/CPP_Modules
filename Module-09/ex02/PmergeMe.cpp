@@ -183,6 +183,20 @@ void processLine(std::string str)
     }
 }
 
+long long stringToLong(const std::string &str)
+{
+    std::stringstream ss(str);
+    long long result;
+
+    ss >> result;
+    if (ss.fail() || !ss.eof() || result > std::numeric_limits<int>::max())
+    {
+        throw std::exception();
+        return (0);
+    }
+    return (result);
+}
+
 void PmergeMe::processInput(int argc, char **argv)
 {
     int i;
@@ -190,7 +204,7 @@ void PmergeMe::processInput(int argc, char **argv)
     {
         long num;
         processLine(argv[i]);
-        num = std::stol(argv[i]);
+        num = stringToLong(argv[i]);
         if (num < 0)
         {
             std::cout << "Only positive numbers allowed" << std::endl;

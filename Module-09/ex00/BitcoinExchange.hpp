@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <sstream>
+#include <limits>
 
 
 class BitcoinExchange

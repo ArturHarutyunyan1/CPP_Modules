@@ -191,8 +191,8 @@ long long stringToLong(const std::string &str)
     ss >> result;
     if (ss.fail() || !ss.eof() || result > std::numeric_limits<int>::max())
     {
-        throw std::exception();
-        return (0);
+        std::cout << "Error: Overflow caught" << std::endl;
+        exit (1);
     }
     return (result);
 }

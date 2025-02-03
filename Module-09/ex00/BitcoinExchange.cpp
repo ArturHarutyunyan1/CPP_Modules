@@ -65,7 +65,7 @@ void processDate(std::string date)
         year = stringToLong(date.substr(0, firstDash));
         month = stringToLong(date.substr(firstDash + 1, secondDash - firstDash - 1));
         day = stringToLong(date.substr(secondDash + 1));
-        if (year <= 0 || month <= 0 || day <= 0)
+        if (year <= 0 || month <= 0 || day <= 0 || month > 12 || day > 31)
             throw std::exception();
     }
     catch (...)

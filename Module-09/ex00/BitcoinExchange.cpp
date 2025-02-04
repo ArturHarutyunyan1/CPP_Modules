@@ -168,7 +168,7 @@ void BitcoinExchange::processLine(std::string key, std::string value)
 {
     if (!BitcoinExchange::validateData(key, value))
         return;
-    long long temp;
+    double temp;
     int dashCount = 0;
 
     for (size_t i = 0; i < key.size(); i++)
@@ -260,7 +260,28 @@ void BitcoinExchange::processInput(char *filename)
         std::cout << "Can't open file - " << filename << std::endl;
         exit(1);
     }
-    std::getline(file, line);
+    if (std::getline(file, line))
+    {
+        if (line != "date | value") 
+        {
+            size_t pos = line.find('|');
+            if (pos != std::string::npos)
+            {
+                std::string key = line.substr(0, pos);
+                std::string value = line.substr(pos + 1);
+
+                key.erase(0, key.find_first_not_of(" \t"));
+                key.erase(key.find_last_not_of(" \t") + 1);
+                value.erase(0, value.find_first_not_of(" \t"));
+                value.erase(value.find_last_not_of(" \t") + 1);
+                processLine(key, value);
+            }
+            else
+            {
+                std::cout << "Error: bad input => " << line << std::endl;
+            }
+        }
+    }
     while (std::getline(file, line))
     {
         size_t pos = line.find('|');
@@ -277,7 +298,8 @@ void BitcoinExchange::processInput(char *filename)
             processLine(key, value);
         }
         else
-            std::cout << "Error: bad input => " << line << std::endl; 
+            std::cout << "Error: bad input => " << line << std::endl;
     }
+
     file.close();
 }

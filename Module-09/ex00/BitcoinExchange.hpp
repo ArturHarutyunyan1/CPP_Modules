@@ -2,34 +2,31 @@
 #define BITCOINEXCHANGE_HPP
 
 #include <iostream>
-#include <map>
 #include <fstream>
-#include <algorithm>
-#include <exception>
-#include <cstdlib>
-#include <cmath>
 #include <sstream>
-#include <limits>
-
+#include <iomanip>
+#include <map>
 
 class BitcoinExchange
 {
+    private:
+        std::map<std::string, double> data;
+        enum FileType { DataFile = 0, InputFile = 1};
+    private:
+        void readFile(const std::string &file, int type);
+        void setData(const std::string &line);
+        void calculateValue(const std::string &date, double value) const;
+    private:
+        double toDouble(const std::string &value) const;
+        bool checkDate(const std::string &line) const;
+        bool isValidDate(long year, long month, long day) const;
+        void validateInput(const std::string &line, int type) const;
     public:
-        BitcoinExchange();
+        BitcoinExchange(const std::string &file);
         BitcoinExchange(const BitcoinExchange &copy);
         BitcoinExchange &operator=(const BitcoinExchange &copy);
-        void processInput(char *filename);
-        template <typename T>
-        void checkOccrrence(std::string key, T value);
-        void processLine(std::string key, std::string value);
-        bool validateData(std::string key, std::string value);
         ~BitcoinExchange();
-    private:
-        std::map<std::string, std::string> data;
 };
 
-long long stringToLong(const std::string &str);
-double stringToDouble(const std::string &str);
-bool isFloat(const std::string str);
 
 #endif

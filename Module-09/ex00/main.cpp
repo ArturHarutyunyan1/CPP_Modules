@@ -1,17 +1,17 @@
 #include "BitcoinExchange.hpp"
+#include <string>
 
 int main(int argc, char **argv)
 {
-    (void)argv;
-    if (argc != 2)
+    try
     {
-        std::cout << "Invalid input! Usage - ./btc input.txt" << std::endl;
-        return (1);
+        if (argc != 2)
+            throw std::runtime_error("Error\nUsage ./btc [input_file]");
+        std::string file(argv[1]);
+        BitcoinExchange btc(file);
     }
-    else
+    catch(const std::exception& e)
     {
-        BitcoinExchange b = BitcoinExchange();
-        b.processInput(argv[1]);
+        std::cerr << e.what() << '\n';
     }
-    return (0);
 }

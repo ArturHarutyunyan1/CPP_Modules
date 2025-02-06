@@ -23,6 +23,13 @@ class PmergeMe
     private:
         std::vector<int> vectorList;
         std::deque<int> dequeList;
+        void insertionSortVector(std::vector<int> &list);
+        void insertionSortDeque(std::deque<int> &list);
+        void insertVector(std::vector<int> &left, std::vector<int> &right);
+        void insertDeque(std::deque<int> &left, std::deque<int> &right);
+        void fordVector(std::vector<int> &list);
+        void fordDeque(std::deque<int> &list);
+        long long stringToLong(const std::string &str);
 };
 
 #endif

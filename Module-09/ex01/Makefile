@@ -6,7 +6,7 @@ OBJ = ${SRC:.cpp=.o}
 CPP = c++
 RM = rm -f
 
-$(NAME): $(OBJ) RPN.hpp
+$(NAME): $(OBJ) RPN.hpp Makefile
 	$(CPP) $(CPPFLAGS) -o $(NAME) $(OBJ)
 %.o: %.cpp
 	$(CPP) $(CPPFLAGS) -c $< -o $@

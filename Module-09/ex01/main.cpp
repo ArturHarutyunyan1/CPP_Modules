@@ -1,17 +1,13 @@
 #include "RPN.hpp"
 
-int main(int argc, char **argv)
-{
-    if (argc != 2)
-    {
-        std::cout << "Error" << std::endl;
-        return (1);
+int main(int argc, char **argv) {
+    try {
+        if (argc != 2)
+            throw std::runtime_error("Error");
+        RPN rpn;
+        rpn.calculator(argv[1]);
+    } catch (std::exception &e) {
+        std::cerr << e.what() << '\n';
+        return 1;
     }
-    else
-    {
-        RPN polish = RPN();
-
-        polish.ReversePolishNotation(argv[1]);
-    }
-    return (0);
 }

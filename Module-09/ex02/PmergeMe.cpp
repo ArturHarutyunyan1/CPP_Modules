@@ -25,7 +25,7 @@ PmergeMe::~PmergeMe()
 
 }
 
-void insertionSortVector(std::vector<int> &list)
+void PmergeMe::insertionSortVector(std::vector<int> &list)
 {
     for (size_t i = 1; i < list.size(); i++)
     {
@@ -38,7 +38,7 @@ void insertionSortVector(std::vector<int> &list)
     }
 }
 
-void insertionSortDeque(std::deque<int> &list)
+void PmergeMe::insertionSortDeque(std::deque<int> &list)
 {
     for (size_t i = 1; i < list.size(); i++)
     {
@@ -51,7 +51,7 @@ void insertionSortDeque(std::deque<int> &list)
     }
 }
 
-void insertVector(std::vector<int> &left, std::vector<int> &right)
+void PmergeMe::insertVector(std::vector<int> &left, std::vector<int> &right)
 {
     size_t n = 0;
     size_t power = 0;
@@ -78,7 +78,7 @@ void insertVector(std::vector<int> &left, std::vector<int> &right)
     }
 }
 
-void insertDeque(std::deque<int> &left, std::deque<int> &right)
+void PmergeMe::insertDeque(std::deque<int> &left, std::deque<int> &right)
 {
     size_t n = 0;
     size_t power = 0;
@@ -105,7 +105,7 @@ void insertDeque(std::deque<int> &left, std::deque<int> &right)
     }
 }
 
-void fordVector(std::vector<int> &list)
+void PmergeMe::fordVector(std::vector<int> &list)
 {
     std::vector<int> left;
     std::vector<int> right;
@@ -138,7 +138,7 @@ void fordVector(std::vector<int> &list)
     list = left;
 }
 
-void fordDeque(std::deque<int> &list)
+void PmergeMe::fordDeque(std::deque<int> &list)
 {
     std::deque<int> left;
     std::deque<int> right;
@@ -183,7 +183,7 @@ void processLine(std::string str)
     }
 }
 
-long long stringToLong(const std::string &str)
+long long PmergeMe::stringToLong(const std::string &str)
 {
     std::stringstream ss(str);
     long long result;

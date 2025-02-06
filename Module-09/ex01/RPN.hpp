@@ -1,23 +1,24 @@
+//
+// Created by Artur Harutyunyan on 06.02.25.
+//
+
 #ifndef RPN_HPP
 #define RPN_HPP
 
 #include <iostream>
-#include <vector>
+#include <cstdlib>
 #include <stack>
-#include <exception>
-#include <algorithm>
-#include <limits>
 
-class RPN
-{
-    public:
-        RPN();
-        RPN(const RPN &copy);
-        RPN &operator=(const RPN &copy);
-        ~RPN();
-        void ReversePolishNotation(char *input);
-    private:
-        std::stack<int> arr;
+class RPN {
+private:
+    std::stack<long> container;
+    void validator(const std::string &input);
+public:
+    RPN();
+    RPN(const RPN &copy);
+    RPN &operator=(const RPN &copy);
+    ~RPN();
+    void calculator(const std::string &input);
 };
 
-#endif
+#endif //RPN_HPP

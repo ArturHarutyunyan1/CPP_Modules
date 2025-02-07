@@ -20,6 +20,7 @@ class BitcoinExchange
         double toDouble(const std::string &value) const;
         bool checkDate(const std::string &line) const;
         bool isValidDate(long year, long month, long day) const;
+        bool validHeader(const std::string &line) const;
         void validateInput(const std::string &line, int type) const;
     public:
         BitcoinExchange(const std::string &file);

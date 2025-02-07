@@ -29,32 +29,29 @@ void BitcoinExchange::readFile(const std::string &fileName, int type)
 
     if (!file.is_open())
         throw std::runtime_error("Can't open file: " + fileName);
-    validateInput(line, 1);
+    std::getline(file, line);
+    if (type == InputFile && !validHeader(line))
+        throw std::runtime_error("Error: Header must be date | value");
     if (type == DataFile)
         while (std::getline(file, line))
             setData(line);
     else
         while (std::getline(file, line))
-           validateInput(line, 0);
+            validateInput(line, 0);
+
 }
 
 void BitcoinExchange::calculateValue(const std::string &key, double value) const
 {
     double result = 0;
-    std::map<std::string, double>::const_iterator it;
-
-    it = this->data.find(key);
-    if (it != this->data.end())
+    std::map<std::string, double>::const_iterator it = data.end();
+    if (it->first == key)
         result = it->second * value;
     else
     {
-        for (it = this->data.begin(); it != this->data.end(); ++it)
-        {
-            if (it->first < key)
-                result = it->second * value;
-            else
-                break;
-        }
+        while (it != data.begin())
+            --it;
     }
+    result = it->second * value;
     std::cout << std::fixed << std::setprecision(4) << key << " => " << value << " = " << result << std::endl;
 }

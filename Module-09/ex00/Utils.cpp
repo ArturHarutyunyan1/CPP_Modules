@@ -4,7 +4,7 @@ void BitcoinExchange::setData(const std::string &line)
 {
     size_t pos;
     double val;
-
+    
     pos = line.find(',');
     if (pos != std::string::npos)
     {
@@ -21,6 +21,7 @@ void BitcoinExchange::validateInput(const std::string &line, int type) const
     double val;
 
     pos = line.find('|');
+    (void)type;
     if (pos != std::string::npos)
     {
         std::string key = line.substr(0, pos);
@@ -31,8 +32,6 @@ void BitcoinExchange::validateInput(const std::string &line, int type) const
         value.erase(0, value.find_first_not_of(" \t"));
         value.erase(value.find_last_not_of(" \t") + 1);
         val = toDouble(value);
-        if (type == 1 && key != "date" && value != "value")
-            throw std::runtime_error("Error: Invalid file content");
         if (value[0] == '-')
         {
             std::cerr << "Error: not a positive number => " << value << std::endl;
@@ -48,6 +47,25 @@ void BitcoinExchange::validateInput(const std::string &line, int type) const
     }
     else
         std::cerr << "Bad input => " << line << std::endl;
+}
+
+bool BitcoinExchange::validHeader(const std::string &line) const
+{
+    size_t pos = line.find('|');
+
+    if (pos != std::string::npos)
+    {
+        std::string key = line.substr(0, pos);
+        std::string value = line.substr(pos + 1);
+
+        key.erase(0, key.find_first_not_of(" \t"));
+        key.erase(key.find_last_not_of(" \t") + 1);
+        value.erase(0, value.find_first_not_of(" \t"));
+        value.erase(value.find_last_not_of(" \t") + 1);
+        return (true);
+    }
+    else
+        return (false);
 }
 
 bool BitcoinExchange::checkDate(const std::string &line) const {

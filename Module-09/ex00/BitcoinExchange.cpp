@@ -43,15 +43,20 @@ void BitcoinExchange::readFile(const std::string &fileName, int type)
 
 void BitcoinExchange::calculateValue(const std::string &key, double value) const
 {
-    double result = 0;
-    std::map<std::string, double>::const_iterator it = data.end();
-    if (it->first == key)
-        result = it->second * value;
-    else
+    double result = 0.0;
+    std::map<std::string, double>::const_iterator it = data.lower_bound(key);
+
+    if (it == data.end() || it->first != key)
     {
-        while (it != data.begin())
-            --it;
+        if (it == data.begin())
+        {
+            std::cerr << "Error: no data available before " << key << std::endl;
+            return;
+        }
+        --it;
     }
+
     result = it->second * value;
-    std::cout << std::fixed << std::setprecision(4) << key << " => " << value << " = " << result << std::endl;
+    std::cout << std::fixed << std::setprecision(4)
+              << key << " => " << value << " = " << result << std::endl;
 }
